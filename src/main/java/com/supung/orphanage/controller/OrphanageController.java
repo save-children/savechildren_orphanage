@@ -6,11 +6,13 @@ import com.supung.orphanage.model.dto.OrphanageOutputDTO;
 import com.supung.orphanage.service.OrphanageService;
 import com.supung.orphanage.service.OrphanageServiceMapper;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/orphanages")
 public class OrphanageController {
@@ -52,10 +54,12 @@ public class OrphanageController {
     }
 
     @GetMapping("/{id}/getWithRequirements")
-    public ResponseEntity<CompactOrphanageWrapperDTO> getWithRequirements(@PathVariable long id) {
+    public ResponseEntity<CompactOrphanageWrapperDTO> getWithRequirements(@RequestHeader("correlation-id") String correlationId,
+                                                                          @PathVariable long id) {
+        log.info("Finding orphanage with requirements by orphanage id : {}, correlationId : {}", id, correlationId);
         return ResponseEntity.ok(CompactOrphanageWrapperDTO.builder()
                 .orphanage(orphanageService.findById(id))
-                .requirements(orphanageServiceMapper.getRequirementsByOrphanageId(id))
+                .requirements(orphanageServiceMapper.getRequirementsByOrphanageId(correlationId, id))
                 .build());
     }
 
