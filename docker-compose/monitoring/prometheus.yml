@@ -1,0 +1,16 @@
+global:
+  scrape_interval:     5s # Set the scrape interval to every 5 seconds.
+  evaluation_interval: 5s # Evaluate rules every 5 seconds.
+scrape_configs:
+  - job_name: 'orphanage'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['orphanage:8081']
+  - job_name: 'requirement'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['requirement:8082']
+  - job_name: 'donation'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['donation:8083']
