@@ -17,9 +17,9 @@ public class OrphanageApplication {
 		SpringApplication.run(OrphanageApplication.class, args);
 	}
 
-	@Bean
-	public TimedAspect timedAspect(MeterRegistry registry) {
-		return new TimedAspect(registry);
-	}
+//	@Bean
+//	public TimedAspect timedAspect(MeterRegistry registry) {
+//		return new TimedAspect(registry);
+//	}
 
 }
